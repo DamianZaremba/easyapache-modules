@@ -46,10 +46,9 @@ our $easyconfig = {
             command => sub {
                 my $self = @_;
 
-                return $self->run_system_cmd_returnable([
-                                                $self->_get_main_apxs_bin(),
-                                                '-a', '-i', '-c',
-                                                'mod_rpaf-2.0.c']);
+                return $self->run_system_cmd_returnable(['apxs', '-a',
+                                                        '-i', '-c',
+                                                        'mod_rpaf-2.0.c']);
             },
         },
 
