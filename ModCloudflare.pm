@@ -56,8 +56,7 @@ our $easyconfig = {
             command => sub {
                 my($self) = @_;
 
-                return $self->ensure_loadmodule_in_httpdconf(
-                                                        'cloudflare',
+                return $self->ensure_loadmodule_in_httpdconf('cloudflare',
                                                         'mod_cloudflare.so');
             },
         },
