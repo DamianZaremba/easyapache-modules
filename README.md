@@ -8,7 +8,8 @@ In this repo you'll find a bunch of modules, hopefully named in some useful way.
 How to install
 --------------
 
-`git clone https://github.com/DamianZaremba/easyapache-modules.git /var/cpanel/easy/apache/custom_opt_mods/`
+`mkdir -p /var/cpanel/easy/apache/custom_opt_mods/Cpanel/Easy/`
+`git clone https://github.com/DamianZaremba/easyapache-modules.git /var/cpanel/easy/apache/custom_opt_mods/Cpanel/Easy/`
 
 `/scripts/easyapache`
 
