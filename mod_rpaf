@@ -37,7 +37,6 @@ use strict;
 our $easyconfig = {
     name => 'mod_rpaf',
     note => 'mod_rpaf support for Apache 2.x',
-    desc => 'mod_rpaf support for Apache 2.x',
     hastargz => 1,
     src_cd2 => 'mod_rpaf-0.6',
     step => {},
