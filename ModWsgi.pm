@@ -42,7 +42,7 @@ our $easyconfig = {
                 my $self = @_;
 
                 return $self->run_system_cmd_returnable(['./configure',
-                                                        '--with-apxs=' \
+                                                        '--with-apxs=' .
                                                 '/usr/local/apache/bin/apxs']);
             },
         },
