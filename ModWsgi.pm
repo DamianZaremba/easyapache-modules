@@ -22,7 +22,7 @@
 # wget -N http://modwsgi.googlecode.com/files/mod_wsgi-3.3.tar.gz
 # mv mod_wsgi-3.3.tar.gz mod_wsgi.pm.tar.gz
 
-package Cpanel::Easy::mod_wsgi;
+package Cpanel::Easy::ModWsgi;
 
 # Let's be strict about proceedings
 use strict;

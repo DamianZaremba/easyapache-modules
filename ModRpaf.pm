@@ -28,7 +28,7 @@
 # rm -rf mod_rpaf-0.6 src
 
 # We deal in packages
-package Cpanel::Easy::mod_rpaf;
+package Cpanel::Easy::ModRpaf;
 
 # Let's be strict about proceedings
 use strict;

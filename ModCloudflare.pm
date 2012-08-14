@@ -24,7 +24,7 @@
 # rm -rf mod_cloudflare-1.0.3
 
 # We deal in packages
-package Cpanel::Easy::mod_cloudflare;
+package Cpanel::Easy::ModCloudflare;
 
 # Let's be strict about proceedings
 use strict;
