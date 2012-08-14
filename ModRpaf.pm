@@ -44,11 +44,12 @@ our $easyconfig = {
         0 => {
             name => 'Compiling mod_rpaf',
             command => sub {
-                my $self = @_;
+                my($self) = @_;
 
-                return $self->run_system_cmd_returnable(['apxs', '-a',
-                                                        '-i', '-c',
-                                                        'mod_rpaf-2.0.c']);
+                return $self->run_system_cmd_returnable([
+                                                $self->_get_main_apxs_bin(),
+                                                '-a', '-i', '-c',
+                                                'mod_rpaf-2.0.c']);
             },
         },
 
@@ -56,10 +57,10 @@ our $easyconfig = {
         1 => {
             name => 'Loading mod_rpaf into Apache',
             command => sub {
-                my $self = @_;
+                my($self) = @_;
 
-                return $self->ensure_loadmodule_in_httpdconf('rpaf_module',
-                                                            'mod_rpaf-2.0.so');
+                return $self->ensure_loadmodule_in_httpdconf('rpaf',
+                                                        'mod_rpaf-2.0.so');
             },
         },
     },

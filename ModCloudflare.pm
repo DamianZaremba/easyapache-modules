@@ -19,7 +19,8 @@
 # mkdir temp
 # cd temp
 # mkdir mod_cloudflare-1.0.3
-# wget -O mod_cloudflare-1.0.3/mod_cloudflare.c https://raw.github.com/cloudflare/mod_cloudflare/master/mod_cloudflare.c
+# wget -O mod_cloudflare-1.0.3/mod_cloudflare.c \
+#     https://raw.github.com/cloudflare/mod_cloudflare/master/mod_cloudflare.c
 # tar -cvzf mod_cloudflare.pm.tar.gz mod_cloudflare-1.0.3
 # rm -rf mod_cloudflare-1.0.3
 
@@ -40,11 +41,12 @@ our $easyconfig = {
         0 => {
             name => 'Compiling mod_cloudflare',
             command => sub {
-                my $self = @_;
+                my($self) = @_;
 
-                return $self->run_system_cmd_returnable(['apxs', '-a',
-                                                        '-i', '-c',
-                                                        'mod_cloudflare.c']);
+                return $self->run_system_cmd_returnable([
+                                                $self->_get_main_apxs_bin(),
+                                                '-a', '-i', '-c',
+                                                'mod_cloudflare.c']);
             },
         },
 
@@ -52,10 +54,10 @@ our $easyconfig = {
         1 => {
             name => 'Loading mod_cloudflare into Apache',
             command => sub {
-                my $self = @_;
+                my($self) = @_;
 
                 return $self->ensure_loadmodule_in_httpdconf(
-                                                        'cloudflare_module',
+                                                        'cloudflare',
                                                         'mod_cloudflare.so');
             },
         },

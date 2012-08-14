@@ -39,12 +39,13 @@ our $easyconfig = {
         0 => {
             name => 'Running configure on mod_wsgi',
             command => sub {
-                my $self = @_;
+                my($self) = @_;
 
                 return $self->run_system_cmd_returnable([
                                 './configure',
                                 '--with-python=/usr/bin/python2.7',
-                                '--with-apxs=/usr/local/apache/bin/apxs']);
+                                '--with-apxs=' . $self->_get_main_apxs_bin(),
+                                ]);
             },
         },
 
@@ -52,7 +53,7 @@ our $easyconfig = {
         1 => {
             name => 'Running make on mod_wsgi',
             command => sub {
-                my $self = @_;
+                my($self) = @_;
 
                 return $self->run_system_cmd_returnable(['make']);
             },
@@ -62,7 +63,7 @@ our $easyconfig = {
         2 => {
             name => 'Running make install on mod_wsgi',
             command => sub {
-                my $self = @_;
+                my($self) = @_;
 
                 return $self->run_system_cmd_returnable(['make', 'install']);
             },
@@ -72,7 +73,7 @@ our $easyconfig = {
         3 => {
             name => 'Loading mod_wsgi into Apache',
             command => sub {
-                my $self = @_;
+                my($self) = @_;
 
                 return $self->ensure_loadmodule_in_httpdconf('wsgi',
                                                             'mod_wsgi.so');
