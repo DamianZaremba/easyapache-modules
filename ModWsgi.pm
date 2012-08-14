@@ -41,9 +41,10 @@ our $easyconfig = {
             command => sub {
                 my $self = @_;
 
-                return $self->run_system_cmd_returnable(['./configure',
-                                                        '--with-apxs=' .
-                                                '/usr/local/apache/bin/apxs']);
+                return $self->run_system_cmd_returnable([
+                                './configure',
+                                '--with-python=/usr/bin/python2.7'
+                                '--with-apxs=/usr/local/apache/bin/apxs']);
             },
         },
 
