@@ -35,7 +35,7 @@ use strict;
 
 # Shared hash for cPanel to understand
 our $easyconfig = {
-    name => 'mod_rpaf',
+    name => 'Mod Rpaf',
     note => 'mod_rpaf support for Apache 2.x',
     hastargz => 1,
     src_cd2 => 'mod_rpaf-0.6',
@@ -64,3 +64,5 @@ $easyconfig->{step}->{1} = {
                                                     'mod_rpaf-2.0.so');
     };
 };
+
+1;

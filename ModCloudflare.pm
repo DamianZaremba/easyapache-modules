@@ -31,7 +31,7 @@ use strict;
 
 # Shared hash for cPanel to understand
 our $easyconfig = {
-    name => 'mod_cloudflare',
+    name => 'Mod Cloudflare',
     note => 'mod_cloudflare support for Apache 2.x',
     hastargz => 1,
     src_cd2 => 'mod_cloudflare-1.0.3',
@@ -60,3 +60,5 @@ $easyconfig->{step}->{1} = {
                                                     'mod_cloudflare.so');
     };
 };
+
+1;

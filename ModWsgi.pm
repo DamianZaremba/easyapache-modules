@@ -29,7 +29,7 @@ use strict;
 
 # Shared hash for cPanel to understand
 our $easyconfig = {
-    name => 'mod_wsgi',
+    name => 'Mod Wsgi',
     note => 'mod_wsgi support for Apache 2.x/Python 2.7',
     hastargz => 1,
     ensurepkg => ['python27-devel'],
@@ -78,3 +78,5 @@ $easyconfig->{step}->{3} = {
         return $self->ensure_loadmodule_in_httpdconf('wsgi', 'mod_wsgi.so');
     };
 };
+
+1;
