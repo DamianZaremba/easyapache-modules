@@ -39,30 +39,31 @@ our $easyconfig = {
     note => 'mod_rpaf support for Apache 2.x',
     hastargz => 1,
     src_cd2 => 'mod_rpaf-0.6',
-    step => {},
-};
+    step => {
+        # Run apxs
+        0 => {
+            name => 'Compiling mod_rpaf',
+            command => sub {
+                my $self = @_;
 
-# Run apxs
-$easyconfig->{step}->{0} = {
-    name => 'Compiling mod_rpaf',
-    command => sub {
-        my $self = @_;
-
-        return $self->run_system_cmd_returnable([$self->_get_main_apxs_bin(),
+                return $self->run_system_cmd_returnable([
+                                                $self->_get_main_apxs_bin(),
                                                 '-a', '-i', '-c',
                                                 'mod_rpaf-2.0.c']);
-    };
-};
+            },
+        },
 
-# Load the module into Apache
-$easyconfig->{step}->{1} = {
-    name => 'Loading mod_rpaf into Apache',
-    command => sub {
-        my $self = @_;
+        # Load the module into Apache
+        1 => {
+            name => 'Loading mod_rpaf into Apache',
+            command => sub {
+                my $self = @_;
 
-        return $self->ensure_loadmodule_in_httpdconf('rpaf_module',
-                                                    'mod_rpaf-2.0.so');
-    };
+                return $self->ensure_loadmodule_in_httpdconf('rpaf_module',
+                                                            'mod_rpaf-2.0.so');
+            },
+        },
+    },
 };
 
 1;

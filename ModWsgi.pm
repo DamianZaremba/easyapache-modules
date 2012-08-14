@@ -34,49 +34,51 @@ our $easyconfig = {
     hastargz => 1,
     ensurepkg => ['python27-devel'],
     src_cd2 => 'mod_wsgi-3.3',
-    step => {},
-};
+    step => {
+        # Run configure
+        0 => {
+            name => 'Running configure on mod_wsgi',
+            command => sub {
+                my $self = @_;
 
-# Run configure
-$easyconfig->{step}->{0} = {
-    name => 'Running configure on mod_wsgi',
-    command => sub {
-        my $self = @_;
-
-        return $self->run_system_cmd_returnable(['./configure',
+                return $self->run_system_cmd_returnable([
+                                                './configure',
                                                 '--with-apxs=%s' %
                                                 $self->_get_main_apxs_bin()]);
-    };
-};
+            },
+        },
 
-# Run make
-$easyconfig->{step}->{1} = {
-    name => 'Running make on mod_wsgi',
-    command => sub {
-        my $self = @_;
+        # Run make
+        1 => {
+            name => 'Running make on mod_wsgi',
+            command => sub {
+                my $self = @_;
 
-        return $self->run_system_cmd_returnable(['make']);
-    };
-};
+                return $self->run_system_cmd_returnable(['make']);
+            },
+        },
 
-# Run make install
-$easyconfig->{step}->{2} = {
-    name => 'Running make install on mod_wsgi',
-    command => sub {
-        my $self = @_;
+        # Run make install
+        2 => {
+            name => 'Running make install on mod_wsgi',
+            command => sub {
+                my $self = @_;
 
-        return $self->run_system_cmd_returnable(['make', 'install']);
-    };
-};
+                return $self->run_system_cmd_returnable(['make', 'install']);
+            },
+        },
 
-# Load the module into Apache
-$easyconfig->{step}->{3} = {
-    name => 'Loading mod_wsgi into Apache',
-    command => sub {
-        my $self = @_;
+        # Load the module into Apache
+        3 => {
+            name => 'Loading mod_wsgi into Apache',
+            command => sub {
+                my $self = @_;
 
-        return $self->ensure_loadmodule_in_httpdconf('wsgi', 'mod_wsgi.so');
-    };
+                return $self->ensure_loadmodule_in_httpdconf('wsgi',
+                                                            'mod_wsgi.so');
+            },
+        },
+    },
 };
 
 1;

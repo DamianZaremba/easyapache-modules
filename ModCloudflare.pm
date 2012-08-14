@@ -35,30 +35,32 @@ our $easyconfig = {
     note => 'mod_cloudflare support for Apache 2.x',
     hastargz => 1,
     src_cd2 => 'mod_cloudflare-1.0.3',
-    step => {},
-};
+    step => {
+        # Run apxs
+        0 => {
+            name => 'Compiling mod_cloudflare',
+            command => sub {
+                my $self = @_;
 
-# Run apxs
-$easyconfig->{step}->{0} = {
-    name => 'Compiling mod_cloudflare',
-    command => sub {
-        my $self = @_;
-
-        return $self->run_system_cmd_returnable([$self->_get_main_apxs_bin(),
+                return $self->run_system_cmd_returnable([
+                                                $self->_get_main_apxs_bin(),
                                                 '-a', '-i', '-c',
                                                 'mod_cloudflare.c']);
-    };
-};
+            },
+        },
 
-# Load the module into Apache
-$easyconfig->{step}->{1} = {
-    name => 'Loading mod_cloudflare into Apache',
-    command => sub {
-        my $self = @_;
+        # Load the module into Apache
+        1 => {
+            name => 'Loading mod_cloudflare into Apache',
+            command => sub {
+                my $self = @_;
 
-        return $self->ensure_loadmodule_in_httpdconf('cloudflare_module',
-                                                    'mod_cloudflare.so');
-    };
+                return $self->ensure_loadmodule_in_httpdconf(
+                                                        'cloudflare_module',
+                                                        'mod_cloudflare.so');
+            },
+        },
+    },
 };
 
 1;
