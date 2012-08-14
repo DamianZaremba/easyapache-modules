@@ -31,6 +31,7 @@ use strict;
 our $easyconfig = {
     name => 'mod_wsgi',
     note => 'mod_wsgi support for Apache 2.x/Python 2.7',
+    desc => 'mod_wsgi support for Apache 2.x/Python 2.7',
     hastargz => 1,
     ensurepkg => ['python27-devel'],
     src_cd2 => 'mod_wsgi-3.3',

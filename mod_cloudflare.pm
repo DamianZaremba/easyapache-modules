@@ -33,6 +33,7 @@ use strict;
 our $easyconfig = {
     name => 'mod_cloudflare',
     note => 'mod_cloudflare support for Apache 2.x',
+    desc => 'mod_cloudflare support for Apache 2.x',
     hastargz => 1,
     src_cd2 => 'mod_cloudflare-1.0.3',
     step => {},
