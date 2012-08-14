@@ -43,7 +43,7 @@ our $easyconfig = {
 
                 return $self->run_system_cmd_returnable([
                                 './configure',
-                                '--with-python=/usr/bin/python2.7'
+                                '--with-python=/usr/bin/python2.7',
                                 '--with-apxs=/usr/local/apache/bin/apxs']);
             },
         },
