@@ -36,6 +36,14 @@ our $easyconfig = {
     note => 'mod_cloudflare support for Apache 2.x',
     hastargz => 1,
     src_cd2 => 'mod_cloudflare-1.0.3',
+    modself => sub {
+        my($easy, $self_hr, $profile_hr) = @_;
+        if($profile_hr->{'Apache'}{'version'} eq '2')
+        {
+            $self_hr->{'skip'} = 1;
+            return(0, q{Mod Cloudflare requires Apache 2.x});
+        }
+    },
     step => {
         # Run apxs
         0 => {
@@ -47,17 +55,6 @@ our $easyconfig = {
                                                 $self->_get_main_apxs_bin(),
                                                 '-a', '-i', '-c',
                                                 'mod_cloudflare.c']);
-            },
-        },
-
-        # Load the module into Apache
-        1 => {
-            name => 'Loading mod_cloudflare into Apache',
-            command => sub {
-                my($self) = @_;
-
-                return $self->ensure_loadmodule_in_httpdconf('cloudflare',
-                                                        'mod_cloudflare.so');
             },
         },
     },

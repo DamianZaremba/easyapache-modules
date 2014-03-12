@@ -19,8 +19,8 @@
 # To build the tar.gz do something like the following....
 # mkdir temp
 # cd temp
-# wget -N http://modwsgi.googlecode.com/files/mod_wsgi-3.3.tar.gz
-# mv mod_wsgi-3.3.tar.gz mod_wsgi.pm.tar.gz
+# wget -N http://modwsgi.googlecode.com/files/mod_wsgi-3.4.tar.gz
+# mv mod_wsgi-3.4.tar.gz ModWsgi.pm.tar.gz
 
 package Cpanel::Easy::ModWsgi;
 
@@ -30,10 +30,30 @@ use strict;
 # Shared hash for cPanel to understand
 our $easyconfig = {
     name => 'Mod Wsgi',
-    note => 'mod_wsgi support for Apache 2.x/Python 2.7',
+    note => 'mod_wsgi support for Apache 2.x/Python 2.6',
     hastargz => 1,
     ensurepkg => ['python27-devel'],
-    src_cd2 => 'mod_wsgi-3.3',
+    src_cd2 => 'mod_wsgi-3.4',
+    'when_i_am_off' => sub {
+        my($self) = @_;
+
+        $self->strip_from_httpconf('LoadModule wsgi_module modules/mod_wsgi.so');
+    },
+    modself => sub {
+        my($easy, $self_hr, $profile_hr) = @_;
+
+        if(! -f '/usr/include/python2.6/Python.h')
+        {
+            $self_hr->{'skip'} = 1;
+            return(0, q{Mod Wsgi requires Python headers});
+        }
+
+        if($profile_hr->{'Apache'}{'version'} eq '2')
+        {
+            $self_hr->{'skip'} = 1;
+            return(0, q{Mod Wsgi requires Apache 2.x});
+        }
+    },
     step => {
         # Run configure
         0 => {
@@ -43,7 +63,7 @@ our $easyconfig = {
 
                 return $self->run_system_cmd_returnable([
                                 './configure',
-                                '--with-python=/usr/bin/python2.7',
+                                '--with-python=/usr/bin/python',
                                 '--with-apxs=' . $self->_get_main_apxs_bin(),
                                 ]);
             },
@@ -75,8 +95,7 @@ our $easyconfig = {
             command => sub {
                 my($self) = @_;
 
-                return $self->ensure_loadmodule_in_httpdconf('wsgi',
-                                                            'mod_wsgi.so');
+                $self->ensure_loadmodule_in_httpdconf('wsgi', 'mod_wsgi.so');
             },
         },
     },

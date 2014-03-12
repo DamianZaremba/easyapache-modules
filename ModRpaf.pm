@@ -18,14 +18,9 @@
 # To build the tar.gz do something like the following....
 # mkdir temp
 # cd temp
-# wget -N http://stderr.net/apache/rpaf/download/mod_rpaf-0.6.tar.gz
-# tar -xvf mod_rpaf-0.6.tar.gz
-# rm -f mod_rpaf-0.6.tar.gz
-# mv mod_rpaf-0.6 src
-# mkdir mod_rpaf-0.6
-# cp src/mod_rpaf-2.0.c mod_rpaf-0.6
-# tar -cvzf mod_rpaf.pm.tar.gz mod_rpaf-0.6
-# rm -rf mod_rpaf-0.6 src
+# wget https://github.com/gnif/mod_rpaf/archive/v0.8.2.zip
+# unzip v0.8.2.zip 
+# tar -cvzf ModRpaf.pm.tar.gz mod_rpaf-0.8.2
 
 # We deal in packages
 package Cpanel::Easy::ModRpaf;
@@ -38,7 +33,15 @@ our $easyconfig = {
     name => 'Mod Rpaf',
     note => 'mod_rpaf support for Apache 2.x',
     hastargz => 1,
-    src_cd2 => 'mod_rpaf-0.6',
+    src_cd2 => 'mod_rpaf-0.8.2',
+    modself => sub {
+        my($easy, $self_hr, $profile_hr) = @_;
+        if($profile_hr->{'Apache'}{'version'} eq '2')
+        {
+            $self_hr->{'skip'} = 1;
+            return(0, q{Mod Rpaf requires Apache 2.x});
+        }
+    },
     step => {
         # Run apxs
         0 => {
@@ -49,18 +52,7 @@ our $easyconfig = {
                 return $self->run_system_cmd_returnable([
                                                 $self->_get_main_apxs_bin(),
                                                 '-a', '-i', '-c',
-                                                'mod_rpaf-2.0.c']);
-            },
-        },
-
-        # Load the module into Apache
-        1 => {
-            name => 'Loading mod_rpaf into Apache',
-            command => sub {
-                my($self) = @_;
-
-                return $self->ensure_loadmodule_in_httpdconf('rpaf',
-                                                        'mod_rpaf-2.0.so');
+                                                'mod_rpaf.c']);
             },
         },
     },
