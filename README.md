@@ -8,18 +8,12 @@ In this repo you'll find a bunch of modules, hopefully named in some useful way.
 How to install
 --------------
 
-`mkdir -p /var/cpanel/easy/apache/custom_opt_mods/Cpanel/Easy/`
-`git clone https://github.com/DamianZaremba/easyapache-modules.git /var/cpanel/easy/apache/custom_opt_mods/Cpanel/Easy/`
-
-`/scripts/easyapache`
+    git clone https://github.com/DamianZaremba/easyapache-modules.git
+    cd easyapache-modules
+    make install
+    /scripts/easyapache
 
 License
 -------
 
 Everything in this repo is released under GPLv3
-
-TODO
-----
-
-* Write rpm specs for each module
-* Probably puppetize somewhat
